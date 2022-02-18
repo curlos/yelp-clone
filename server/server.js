@@ -45,12 +45,12 @@ app.post('/api/v1/restaurants', async (req, res) => {
   console.log(req.body)
 
   try {
-    const results = await db.query('INSERT INTO restaurants (name, location, price_range) values ($1, $2, $3)', [req.body.name, req.body.location, req.body.price_range])
+    const results = await db.query('INSERT INTO restaurants (name, location, price_range) values ($1, $2, $3) returning *', [req.body.name, req.body.location, req.body.price_range])
     console.log(results)
     res.status(200).json({
       status: "success",
       data: {
-        restaurant: results
+        restaurant: results.rows[0]
       }
     })
   } catch (err) {
