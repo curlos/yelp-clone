@@ -13,13 +13,15 @@ const AddRestaurant = () => {
     e.preventDefault()
 
     try {
-      const response = await axios.post('http://localhost:3001/api/v1/restaurants', {
-        name,
-        location,
-        price_range: priceRange
-      })
-      console.log(response.data.data)
-      addRestaurants(response.data.data.restaurant)
+      if (name !== '' && location !== '') {
+        const response = await axios.post('http://localhost:3001/api/v1/restaurants', {
+          name,
+          location,
+          price_range: priceRange
+        })
+        console.log(response.data.data)
+        addRestaurants(response.data.data.restaurant)
+      }
     } catch (err) {
       console.log(err)
     }
