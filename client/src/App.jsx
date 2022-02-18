@@ -1,16 +1,16 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { RestaurantsContextProvider } from "./context/RestaurantsContext";
 import Home from './pages/Home'
 
-function App() {
+const App = () => {
   return (
     <RestaurantsContextProvider>
       <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          
-        </Switch>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+
+        </Routes>
       </Router>
     </RestaurantsContextProvider>
   );
