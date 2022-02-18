@@ -16,7 +16,24 @@ CREATE TABLE restaurants (
     and price_range <= 5
   )
 );
-INSERT INTO restaurants (name, location, price_range)
-values ('McDonalds', 'New York', 3);
-INSERT INTO restaurants (name, location, price_range)
-values ('Pizza Hut', 'Las Vegas', 3);
+CREATE TABLE reviews (
+  id BIGSERIAL NOT NULL PRIMARY KEY,
+  restaurant_id BIGINT NOT NULL REFERENCES restaurants(id),
+  name VARCHAR(50) NOT NULL,
+  review TEXT NOT NULL,
+  rating INT NOT NULL check(
+    rating >= 1
+    and rating <= 5
+  )
+);
+SELECT *
+FROM reviews;
+SELECT *
+FROM restaurants
+  left join (
+    SELECT restaurant_id,
+      COUNT(*),
+      TRUNC(AVG(rating), 1) as average_rating
+    FROM reviews
+    GROUP BY restaurant_id
+  ) reviews on restaurants.id = reviews.restaurant_id
